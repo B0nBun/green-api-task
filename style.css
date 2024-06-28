@@ -1,0 +1,86 @@
+:root {
+    --bg-color: #fbfffe;
+    --primary-color: #faa916;
+    --primary-faded-color: #ffeecf;
+    --fg-color: #363336; 
+    font-size: 18px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    color: var(--fg-color);
+}
+
+body {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color);
+}
+
+input, select, button {
+    font-size: inherit;
+}
+
+input, select {
+    border-radius: .2rem .2rem 0 0;
+    padding: .3rem .5rem;
+    border: none;
+    border-bottom: 1px solid var(--fg-color);
+    background-color: var(--primary-faded-color);
+}
+
+button {
+    padding: .3rem .5rem;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: .2rem;
+}
+
+header {
+    margin: 2rem 0;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.gap-1 {
+    gap: .5rem;
+}
+
+.gap-2 {
+    gap: 1rem;
+}
+
+.gap-4 {
+    gap: 2rem;
+}
+
+#response-box {
+    background-color: var(--primary-faded-color);
+    border-radius: .2rem;
+    padding: 1rem;
+    width: 100%;
+}
+
+#response-body {
+    margin-top: 1rem;
+    border-radius: .2rem;
+    padding: .5rem;
+    white-space: pre;
+    font-family: monospace;
+    font-size: .8rem;
+    background-color: var(--bg-color);
+}

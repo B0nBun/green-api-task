@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green API</title>
+    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Green API</h1>
+    </header>
+
+    <main class="row gap-4">
+        <form id="green-api-form" class="col gap-4">
+            <section class="col gap-1">
+                <input type="text" name="id-instance" placeholder="ID Instance" required />
+                <input type="text" name="api-token-instance" placeholder="API Token Instance" required />
+            </section>
+
+            <section class="col gap-1">
+                <button type="button" name="get-settings">Get Settings</button>
+                <button type="button" name="get-state-instance">Get State Instance</button>
+            </section>
+
+            <section>
+                <div class="row gap-1">
+                    <input type="text" name="chat-id" placeholder="Chat ID" />
+                    <select name="chat-id-suffix">
+                        <option value="@c.us">@c.us</option>
+                        <option value="@g.us">@g.us</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="col gap-1">
+                <input type="text" name="message" placeholder="Message"/>
+                <button type="button" name="send-message">Send Message</button>
+            </section>
+
+            <section class="col gap-1">
+                <input type="text" name="url-file" placeholder="File URL"/>
+                <input type="text" name="file-name" placeholder="File Name"/>
+                <button type="button" name="send-file-by-url">Send File By URL</button>
+            </section>
+        </form>
+        <div id="response-box">
+            <h2>Response</h2>
+            <div>
+                <span>Status: </span>
+                <span id="status">-</span>
+            </div>
+            <div id="response-body"></div>
+        </div>
+    </main>
+</body>
+</html>
