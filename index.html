@@ -23,23 +23,27 @@
                 <button type="button" name="get-settings">Get Settings</button>
                 <button type="button" name="get-state-instance">Get State Instance</button>
             </section>
-
-            <section>
+            
+            <section class="col gap-1">
                 <div class="row gap-1">
-                    <input type="text" name="chat-id" placeholder="Chat ID" />
-                    <select name="chat-id-suffix">
+                    <input type="text" name="chat-id-message" placeholder="Chat ID" />
+                    <select name="chat-id-suffix-message">
                         <option value="@c.us">@c.us</option>
                         <option value="@g.us">@g.us</option>
                     </select>
                 </div>
-            </section>
-
-            <section class="col gap-1">
                 <input type="text" name="message" placeholder="Message"/>
                 <button type="button" name="send-message">Send Message</button>
             </section>
 
             <section class="col gap-1">
+                <div class="row gap-1">
+                    <input type="text" name="chat-id-file" placeholder="Chat ID" />
+                    <select name="chat-id-suffix-file">
+                        <option value="@c.us">@c.us</option>
+                        <option value="@g.us">@g.us</option>
+                    </select>
+                </div>
                 <input type="text" name="url-file" placeholder="File URL"/>
                 <input type="text" name="file-name" placeholder="File Name"/>
                 <button type="button" name="send-file-by-url">Send File By URL</button>

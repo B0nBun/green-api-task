@@ -1,17 +1,44 @@
-const form = document.getElementById("green-api-form")
-const responseBox = document.getElementById("response-box")
-const responseBody = responseBox.querySelector("#response-body")
-const statusElem = responseBox.querySelector("#status")
-
-const buttons = {
-    getSettings: form.querySelector("[name='get-settings']"),
-    getStateInstance: form.querySelector("[name='get-state-instance']"),
-    sendMessage: form.querySelector("[name='send-message']"),
-    sendFileByUrl: form.querySelector("[name='send-file-by-url']"),
+/**
+ * @type {import("./selectElement.d.ts").selectElement}
+ */
+function selectElement(selector, elementType) {
+    const element = document.querySelector(selector);
+    if (element && element instanceof elementType) {
+        return element;
+    }
+    throw new Error(
+        `Selected element had an unexpected type: expected ${elementType} from ${element}`,
+    );
 }
 
-form.querySelector("[name='id-instance']").value = localStorage.getItem("id-instance") ?? ""
-form.querySelector("[name='api-token-instance']").value = localStorage.getItem("api-token-instance") ?? ""
+/**
+ * 
+ * @param {FormData} formData 
+ * @param {string} key 
+ * @returns {string}
+ */
+function formDataGetString(formData, key) {
+    const value = formData.get(key)
+    if (typeof value != "string") {
+        throw new Error(`Expected a string from formData, but got ${typeof value}`)
+    }
+    return value
+}
+
+const form = selectElement("#green-api-form", HTMLFormElement)
+const responseBody = selectElement("#response-body", HTMLElement)
+const statusElem = selectElement("#status", HTMLElement)
+
+/** @readonly */
+const buttons = {
+    getSettings: selectElement("#green-api-form [name='get-settings']", HTMLButtonElement),
+    getStateInstance: selectElement("#green-api-form [name='get-state-instance']", HTMLButtonElement),
+    sendMessage: selectElement("#green-api-form [name='send-message']", HTMLButtonElement),
+    sendFileByUrl: selectElement("#green-api-form [name='send-file-by-url']", HTMLButtonElement),
+}
+
+selectElement("#green-api-form [name='id-instance']", HTMLInputElement).value = localStorage.getItem("id-instance") ?? ""
+selectElement("#green-api-form [name='api-token-instance']", HTMLInputElement).value = localStorage.getItem("api-token-instance") ?? ""
 
 /**
  * @param {string} method 
@@ -19,8 +46,8 @@ form.querySelector("[name='api-token-instance']").value = localStorage.getItem("
  */
 function urlFromMethod(method) {
     const formData = new FormData(form)
-    const idInstance = formData.get("id-instance")
-    const apiTokenInstance = formData.get("api-token-instance")
+    const idInstance = formDataGetString(formData, "id-instance")
+    const apiTokenInstance = formDataGetString(formData, "api-token-instance")
     localStorage.setItem("id-instance", idInstance)
     localStorage.setItem("api-token-instance", apiTokenInstance)
     const url = new URL(`https://api.green-api.com/waInstance${idInstance}/${method}/${apiTokenInstance}`)
@@ -28,17 +55,7 @@ function urlFromMethod(method) {
 }
 
 /**
- * @returns {string}
- */
-function getChatId() {
-    const formData = new FormData(form)
-    const chatId = formData.get("chat-id")
-    const chatIdSuffix = formData.get("chat-id-suffix")
-    return chatId + chatIdSuffix
-}
-
-/**
- * @param {Response} response 
+ * @param {Response} response
  */
 async function displayResponse(response) {
     try {
@@ -70,8 +87,8 @@ buttons.getStateInstance.addEventListener("click", () => {
 
 buttons.sendMessage.addEventListener("click", () => {
     const formData = new FormData(form)
-    const chatId = getChatId()
-    const message = formData.get("message")
+    const chatId = formDataGetString(formData, "chat-id-message") + formDataGetString(formData, "chat-id-suffix-message")
+    const message = formDataGetString(formData, "message")
     const url = urlFromMethod("sendMessage")
     displayLoading()
     fetch(url, {
@@ -87,8 +104,8 @@ buttons.sendMessage.addEventListener("click", () => {
 
 buttons.sendFileByUrl.addEventListener("click", () => {
     const formData = new FormData(form)
-    const chatId = getChatId()
-    const urlFile = formData.get("url-file")
+    const chatId = formDataGetString(formData, "chat-id-message") + formDataGetString(formData, "chat-id-suffix-message")
+    const urlFile = formDataGetString(formData, "url-file")
     const fileName = formData.get("file-name")
     const url = urlFromMethod("sendFileByUrl")
     displayLoading()
